@@ -311,7 +311,7 @@
             W<span class="tilt">I</span>LL.<span class="to-learn">TOLEARN</span>
         </div>
 
-        <div class="message">
+        <div class="message" id="welcome-message">
             MAY THESE LIGHTS GUIDE YOU ON YOUR PATH
         </div>
 
@@ -379,7 +379,16 @@
         </nav>
     </div>
 
-    <!-- Enhanced Light Rays Shader Integration -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('username');
+            const welcomeMsg = document.getElementById('welcome-message');
+            if (username && welcomeMsg) {
+                welcomeMsg.innerText = `WELCOME, ${username.toUpperCase()}. MAY THESE LIGHTS GUIDE YOUR PATH.`;
+            }
+        });
+    </script>
+
     <script type="module">
         import { Renderer, Program, Triangle, Mesh } from 'https://cdn.jsdelivr.net/npm/ogl@0.0.116/+esm';
 
