@@ -2,16 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const path = require('path'); // Added for file path handling
 require('dotenv').config();
 
 const app = express();
 
 // --- MIDDLEWARE ---
 app.use(express.json());
-app.use(cors()); // Allows your HTML frontend to communicate with this backend
+app.use(cors());
+
+// --- SERVE STATIC FILES ---
+// This tells Express to serve your images (LOGO.jpeg), CSS, and JS files 
+// from your project folder automatically.
+app.use(express.static(__dirname));
 
 // --- MONGODB CONNECTION ---
-// On Render, it will use the environment variable. Locally, it uses your string.
 const mongoURI = process.env.MONGO_URI || "mongodb+srv://will_123:will12345@cluster0.bynok57.mongodb.net/WillToLearnDB?retryWrites=true&w=majority";
 
 mongoose.connect(mongoURI)
@@ -29,18 +34,25 @@ const User = mongoose.model('User', userSchema);
 
 // --- ROUTES ---
 
-// 1. Signup Route: Encrypts password and saves new user
+/**
+ * 1. Root Route 
+ * This is what users see when they go to https://will-tolearn.onrender.com/
+ * We are now sending the actual HTML file instead of just text.
+ */
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index1.html'));
+});
+
+// 2. Signup Route
 app.post('/signup', async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        // Check if user exists
         const existingUser = await User.findOne({ username });
         if (existingUser) {
             return res.status(400).json({ error: "Username already taken" });
         }
 
-        // Hash the password (Security step)
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -56,24 +68,20 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// 2. Login Route: Verifies credentials
+// 3. Login Route
 app.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
-
-        // Find user by username
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
 
-        // Compare encrypted passwords
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ error: "Invalid password" });
         }
 
-        // Success
         res.status(200).json({ 
             message: "Login successful",
             username: user.username 
@@ -81,11 +89,6 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Server error during login" });
     }
-});
-
-// 3. Root Route (For health check)
-app.get('/', (req, res) => {
-    res.send("Will.ToLearn API is running...");
 });
 
 // --- START SERVER ---
