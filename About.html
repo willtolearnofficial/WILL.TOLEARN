@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WILL.TOLEARN - About Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Tilt+Prism&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Shader Background Container */
+        #light-rays-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 20px 4% 160px 4%; /* Added bottom padding for dock */
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Branding: WILL.TOLEARN */
+        .brand-header {
+            font-size: clamp(24px, 5vw, 28px); /* Fluid typography */
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        .brand-header span.tilt { font-family: 'Tilt Prism', cursive; margin: 0 2px; }
+
+        /* Exact Blue Border Accent with Hook and Dots */
+        .card-header-container {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 8px;
+            width: 100%;
+        }
+
+        .card-title {
+            font-size: clamp(20px, 4vw, 24px);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blue-border-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 90%;
+            height: 4px;
+            background: #2b57ff;
+            box-shadow: 0 0 10px rgba(43, 87, 255, 0.4);
+        }
+
+        /* The vertical hook at the end of the line */
+        .blue-border-line::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 10px;
+            height: 15px;
+            border-right: 4px solid #2b57ff;
+        }
+
+                       /* Content Layout */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: clamp(16px, 3vw, 24px);
+            height: 100%;
+        }
+
+        .text-body {
+            font-size: clamp(12px, 2.5vw, 13px);
+            line-height: 1.6;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .bullet-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+        .bullet-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #fff;
+        }
+
+        /* Feature Box Highlight */
+        .white-feature-box {
+            background: #fff;
+            color: #000;
+            border-radius: 15px;
+            padding: clamp(15px, 2.5vw, 20px);
+            margin-top: 15px;
+        }
+        .feature-box-title {
+            font-size: clamp(12px, 2.5vw, 14px);
+            font-weight: 700;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Navigation Dock */
+        .navigation-dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.9);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 8px 16px;
+            display: flex;
+            gap: clamp(10px, 4vw, 20px);
+            align-items: center;
+            width: max-content;
+            max-width: 90vw;
+        }
+        .nav-item { opacity: 0.4; transition: 0.3s; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        .nav-item.active { opacity: 1; }
+        .nav-indicator { width: 15px; height: 3px; border-radius: 2px; margin-top: 5px; background: transparent; }
+        .active .nav-indicator { background: #2b57ff; box-shadow: 0 0 8px #2b57ff; }
+
+        /* RESPONSIVE GRID OVERRIDE */
+        @media (max-width: 768px) {
+            .responsive-grid { 
+                grid-template-columns: 1fr !important; 
+            }
+            .col-span-2 {
+                grid-column: span 1 / span 1 !important;
+            }
+            .brand-header {
+                justify-content: center;
+            }
+            .community-flex {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+        }
+/* Base styles for the body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* The main dock container */
+        .dock-panel {
+            /* Changed from 'absolute' to 'fixed' to keep it in the viewport */
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            width: fit-content;
+            gap: 1.5rem;
+            border-radius: 1.5rem;
+            background-color: rgba(6, 0, 16, 0.5);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid #222;
+            padding: 0.5rem 1rem 1rem;
+        }
+
+        /* Individual dock items */
+        .dock-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Hover effect to lift the icon */
+        .dock-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Label that appears on hover */
+        .dock-label {
+            position: absolute;
+            top: -2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #333;
+            color: #fff;
+            font-size: 0.875rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Show label on hover */
+        .dock-item:hover .dock-label {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Wrapper for the icon to handle background color change */
+        .dock-icon-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: transparent;
+            border-radius: 1rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        /* Active state for the icon wrapper */
+        .dock-item.active .dock-icon-wrapper {
+            background-color: #333;
+        }
+
+        /* Text inside the 'me' icon */
+        .dock-text-icon {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Oval indicator at the bottom */
+        .dock-indicator {
+            width: 1.5rem;
+            height: 0.375rem;
+            background-color: #333;
+            border-radius: 9999px;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Active state for the indicator */
+        .dock-indicator.active {
+            background-color: #2e86de;
+        }
+
+        /* Responsive adjustments for mobile devices */
+        @media (max-width: 768px) {
+            .dock-panel {
+                gap: 0.75rem;
+                bottom: 1rem;
+                padding: 0.5rem 0.75rem 0.75rem;
+            }
+            .dock-icon-wrapper {
+                width: 3rem;
+                height: 3rem;
+            }
+            .dock-item svg, .dock-text-icon {
+                font-size: 1.25rem;
+                width: 24px;
+                height: 24px;
+            }
+            .dock-label {
+                top: -2rem;
+                font-size: 0.75rem;
+            }
+        }
+        /* Mobile-specific adjustments for a more compact design */
+        @media (max-width: 500px) {
+            .dock-panel {
+                gap: 0.5rem;
+                bottom: 0.5rem; /* Reduced bottom value for very small screens */
+                padding: 0.25rem 0.5rem 0.5rem;
+            }
+            .dock-icon-wrapper {
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 0.75rem;
+            }
+            .dock-item svg, .dock-text-icon {
+                font-size: 1rem;
+                width: 20px;
+                height: 20px;
+            }
+            .dock-indicator {
+                width: 1rem;
+                height: 0.25rem;
+                margin-top: 0.25rem;
+            }
+            .dock-label {
+                top: -1.75rem;
+                font-size: 0.65rem;
+                padding: 0.15rem 0.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="light-rays-bg"></div>
+
+    <div class="main-wrapper">
+        <div class="brand-header">W<span class="tilt">I</span>LL.TOLEARN</div>
+
+        <div class="responsive-grid grid grid-cols-2 gap-6">
+            
+            <div class="glass-card">
+                <div class="card-header-container">
+                    <h2 class="card-title">ABOUT US</h2>
+                    <div class="blue-border-line">
+                        <div class="dots-container">
+                            <div class="accent-dot"></div><div class="accent-dot"></div><div class="accent-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-body">
+                    <div class="bullet-item">AT WILL.TOLEARN, WE BELIEVE THAT KNOWLEDGE SHOULD BE FREE, ACCESSIBLE, AND DRIVEN BY CURIOSITY — NOT LIMITED BY MONEY, ADS, OR CERTIFICATES.</div>
+                    <div class="bullet-item">LEARNING TODAY OFTEN COMES WITH DISTRACTIONS, PAYWALLS, AND UNNECESSARY BARRIERS. OUR GOAL IS TO CHANGE THAT. WILL.TOLEARN IS A PLATFORM BUILT FOR PEOPLE WHO GENUINELY WANT TO LEARN — WHETHER THEY ARE STUDENTS, PROFESSIONALS, OR LIFELONG LEARNERS — AND FOR THOSE WHO WANT TO SHARE WHAT THEY KNOW TO HELP OTHERS GROW.</div>
+                    <div class="bullet-item">WE ARE CREATING A SPACE WHERE LEARNING FEELS SIMPLE, MEANINGFUL, AND ENJOYABLE.</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header-container">
+                    <h2 class="card-title">OUR VISION</h2>
+                    <div class="blue-border-line">
+                        <div class="dots-container">
+                            <div class="accent-dot"></div><div class="accent-dot"></div><div class="accent-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-body">
+                    <div class="bullet-item">OUR VISION IS TO BUILD A GLOBAL, COMMUNITY-DRIVEN LEARNING PLATFORM WHERE ANYONE CAN ACCESS KNOWLEDGE FREELY AND ANYONE WITH SKILLS OR EXPERIENCE CAN CONTRIBUTE.</div>
+                    <div class="bullet-item">WE IMAGINE A FUTURE WHERE LEARNING IS POWERED BY PASSION RATHER THAN PROFIT, AND WHERE EDUCATION GROWS THROUGH SHARING.</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header-container">
+                    <h2 class="card-title">WHAT'S COMING NEXT</h2>
+                    <div class="blue-border-line">
+                        <div class="dots-container">
+                            <div class="accent-dot"></div><div class="accent-dot"></div><div class="accent-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-body">
+                    THIS IS JUST THE BEGINNING. WE ARE ACTIVELY WORKING ON INTRODUCING:
+                    <div class="mt-4 pl-4">
+                        <div class="bullet-item">FREE COURSES ACROSS VARIOUS TOPICS</div>
+                        <div class="bullet-item">COMMUNITY-CONTRIBUTED LEARNING CONTENT</div>
+                        <div class="bullet-item">INTERACTIVE LEARNING EXPERIENCES</div>
+                        <div class="bullet-item">MORE FREE TOOLS FOR STUDENTS AND PROFESSIONALS</div>
+                    </div>
+                    <p class="mt-4">OUR LONG-TERM GOAL IS TO MAKE WILL.TOLEARN A PLACE WHERE LEARNING NEVER FEELS RESTRICTED OR COMMERCIALIZED.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header-container">
+                    <h2 class="card-title">WHAT WE OFFER TODAY</h2>
+                    <div class="blue-border-line">
+                        <div class="dots-container">
+                            <div class="accent-dot"></div><div class="accent-dot"></div><div class="accent-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-body">
+                    WHILE WE ARE CONTINUOUSLY GROWING, WILL.TOLEARN ALREADY PROVIDES PRACTICAL TOOLS DESIGNED TO SUPPORT LEARNERS AND PROFESSIONALS — COMPLETELY FREE AND WITHOUT ADS.
+                    <div class="white-feature-box">
+                        <div class="feature-box-title">CURRENT FEATURES INCLUDE</div>
+                        <div class="font-bold mb-1">• DOCUMENT CONVERTER:</div>
+                        <div class="text-[10px] pl-4 mb-4">CONVERT DOCUMENTS EASILY (PDF ↔ WORD, EXCEL ↔ PDF, LINK ↔ QR, AND MORE)</div>
+                        <div class="font-bold mb-1">• RESUME BUILDER:</div>
+                        <div class="text-[10px] pl-4">CREATE CLEAN, PROFESSIONAL RESUMES WITH EASE</div>
+                    </div>
+                    <p class="mt-4 text-[10px] opacity-70">THESE TOOLS ARE BUILT TO SAVE TIME, REDUCE FRICTION, AND HELP USERS FOCUS ON WHAT TRULY MATTERS — LEARNING AND GROWTH.</p>
+                </div>
+            </div>
+
+            <div class="glass-card col-span-2">
+                <div class="card-header-container">
+                    <h2 class="card-title">COMMUNITY-DRIVEN LEARNING</h2>
+                    <div class="blue-border-line">
+                        <div class="dots-container">
+                            <div class="accent-dot"></div><div class="accent-dot"></div><div class="accent-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center py-6">
+                    <p class="font-bold text-lg md:text-xl mb-4">AT THE HEART OF WILL.TOLEARN IS THE BELIEF THAT EVERYONE KNOWS SOMETHING WORTH SHARING.</p>
+                    <div class="community-flex flex justify-center gap-10 text-[10px] md:text-xs font-bold mb-6">
+                        <span>• IF YOU KNOW SOMETHING, YOU CAN CONTRIBUTE.</span>
+                        <span>• IF YOU WANT TO LEARN, YOU ARE WELCOME HERE.</span>
+                    </div>
+                    <p class="text-[11px] opacity-70 max-w-2xl mx-auto">BY ENCOURAGING COLLABORATION AND CONTRIBUTION, WE AIM TO BUILD A PLATFORM THAT GROWS WITH ITS COMMUNITY AND EVOLVES WITH REAL LEARNING NEEDS.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header-container">
+                    <h2 class="card-title">OUR PROMISE</h2>
+                    <div class="blue-border-line"></div>
+                </div>
+                <div class="text-body">
+                    <div class="bullet-item">ALWAYS FREE</div>
+                    <div class="bullet-item">NO ADS</div>
+                    <div class="bullet-item">NO DISTRACTIONS</div>
+                    <div class="bullet-item">BUILT WITH LEARNERS IN MIND</div>
+                    <p class="mt-4">WE ARE COMMITTED TO KEEPING LEARNING OPEN, SIMPLE, AND ACCESSIBLE FOR EVERYONE.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-header-container">
+                    <h2 class="card-title">LEARN BECAUSE YOU WANT TO</h2>
+                    <div class="blue-border-line"></div>
+                </div>
+                <div class="text-body">
+                    WILL.TOLEARN IS MORE THAN A PLATFORM — IT'S A MINDSET. A PLACE WHERE CURIOSITY LEADS, KNOWLEDGE IS SHARED, AND LEARNING IS DRIVEN BY WILL, NOT OBLIGATION.
+                    <p class="font-bold mt-6">#LEARN BECAUSE YOU WANT TO.</p>
+                </div>
+            </div>
+
+          <nav class="dock-panel">
+            <div class="dock-item" data-label="Home"onclick="window.location.href='home.html'" style="cursor: pointer;">
+                <span class="dock-label">Home</span>
+                <div class="dock-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <div class="dock-indicator"></div>
+            </div>
+
+            <div class="dock-item active" data-label="About" onclick="window.location.href='About.html'" style="cursor: pointer;">
+                <span class="dock-label">About Will</span>
+                <div class="dock-icon-wrapper">
+                    <span style="font-family: 'Inter'; font-weight: 600;">us</span>
+                </div>
+                <div class="dock-indicator active"></div>
+            </div>
+
+            <div class="dock-item" data-label="Features" onclick="window.location.href='Feature.html'" style="cursor: pointer;">
+                <span class="dock-label">Features</span>
+                <div class="dock-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+                </div>
+                <div class="dock-indicator"></div>
+            </div>
+
+            <div class="dock-item" data-label="Learn" onclick="window.location.href='To learn.html'" style="cursor: pointer;">
+                <span class="dock-label">To Learn</span>
+                <div class="dock-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                </div>
+                <div class="dock-indicator"></div>
+            </div>
+
+            <div class="dock-item" data-label="Stats"onclick="window.location.href='Experience.html'" style="cursor: pointer;">
+                <span class="dock-label">Experience</span>
+                <div class="dock-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m18 10-5 5-4-4-3 3"/></svg>
+                </div>
+                <div class="dock-indicator"></div>
+            </div>
+
+            <div class="dock-item" onclick="window.location.href='internship.html'" style="cursor: pointer;">
+                <span class="dock-label">InternShip & Certifications</span>
+                <div class="dock-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text">
+                        <path d="M22 1v17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V1"/>
+                        <path d="M14 8H8"/>
+                        <path d="M16 12H8"/>
+                        <path d="M12 16H8"/>
+                    </svg>
+                </div>
+                <div class="dock-indicator"></div>
+            </div>
+
+            <div class="dock-item" data-label="Profile" onclick="window.location.href='contact.html'" style="cursor: pointer;">
+                <span class="dock-label">Contact</span>
+                <div class="dock-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="dock-indicator"></div>
+            </div>
+        </nav>
+    </div>
+
+
+        </div>
+    </div>
+
+
+
+    <script type="module">
+        import { Renderer, Program, Triangle, Mesh } from 'https://cdn.jsdelivr.net/npm/ogl@0.0.116/+esm';
+        const container = document.getElementById('light-rays-bg');
+        const renderer = new Renderer({ dpr: 2, alpha: true });
+        const gl = renderer.gl;
+        container.appendChild(gl.canvas);
+
+        const vert = `attribute vec2 position; varying vec2 vUv; void main() { vUv = position * 0.5 + 0.5; gl_Position = vec4(position, 0.0, 1.0); }`;
+        const frag = `
+            precision highp float;
+            uniform float iTime;
+            uniform vec2 iResolution;
+            void main() {
+                vec2 coord = gl_FragCoord.xy / iResolution.xy;
+                float r = (sin(coord.x * 12.0 + iTime) * 0.5 + 0.5) * (1.0 - coord.y);
+                gl_FragColor = vec4(vec3(r) * 0.6, 0.35);
+            }
+        `;
+
+        const uniforms = { iTime: { value: 0 }, iResolution: { value: [0, 0] } };
+        const program = new Program(gl, { vertex: vert, fragment: frag, uniforms, transparent: true });
+        const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
+
+        function resize() {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            uniforms.iResolution.value = [window.innerWidth * 2, window.innerHeight * 2];
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function update(t) {
+            requestAnimationFrame(update);
+            uniforms.iTime.value = t * 0.001;
+            renderer.render({ scene: mesh });
+        }
+        requestAnimationFrame(update);
+    </script>
+  <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dockItems = document.querySelectorAll('.dock-item');
+
+            dockItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    dockItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                        const otherIndicator = otherItem.querySelector('.dock-indicator');
+                        if (otherIndicator) {
+                            otherIndicator.classList.remove('active');
+                        }
+                    });
+
+                    item.classList.add('active');
+                    const indicator = item.querySelector('.dock-indicator');
+                    if (indicator) {
+                        indicator.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

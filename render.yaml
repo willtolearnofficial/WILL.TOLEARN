@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: will-to-learn-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false # This will prompt you to enter your connection string in the Render dashboard
+      - key: NODE_VERSION
+        value: 18.16.0

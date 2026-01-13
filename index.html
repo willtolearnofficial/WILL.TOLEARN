@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will.ToLearn - Sync Animation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Tilt+Prism&family=Snippet&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET AND BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* --- THE CIRCLE --- */
+        .expanding-circle {
+            position: absolute;
+            width: 250px; 
+            height: 250px;
+            border: 15px solid #fff;
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0;
+            z-index: 1;
+            animation: circle-animation 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* --- THE LOGO --- */
+        .logo {
+            width: 280px; 
+            height: 280px;
+            object-fit: cover;
+            z-index: 2;
+            border-radius: 50%;
+            transform: scale(0); 
+            opacity: 0;
+            animation: 
+                logo-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards,
+                logo-move 0.6s ease-in-out 1.8s forwards;
+        }
+
+        /* --- THE TEXT WRAPPER --- */
+        .text-wrapper {
+            position: absolute;
+            opacity: 0;
+            white-space: nowrap;
+            display: flex;
+            align-items: baseline;
+            animation: text-reveal 0.6s ease-out 1.9s forwards;
+        }
+
+        /* --- FONT STYLING --- */
+        .font-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 90px;
+            font-weight: 700;
+        }
+
+        .font-tilt {
+            font-family: 'Tilt Prism', cursive;
+            font-size: 95px; 
+            margin: 0 2px;
+        }
+
+        .font-snippet {
+            font-family: 'Snippet', sans-serif;
+            font-size: 85px;
+            /* No margin-left here to keep .ToLearn attached to Will */
+        }
+
+        /* --- KEYFRAMES (Laptop Default) --- */
+        @keyframes circle-animation {
+            0% { transform: scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 0; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        @keyframes logo-pop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes logo-move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-260px); } 
+        }
+
+        @keyframes text-reveal {
+            0% { opacity: 0; transform: translateX(100px); }
+            100% { opacity: 1; transform: translateX(230px); } 
+        }
+
+        /* --- MOBILE RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .logo {
+                width: 180px; 
+                height: 180px;
+            }
+
+            .expanding-circle {
+                width: 160px;
+                height: 160px;
+                border-width: 10px;
+            }
+
+            .font-grotesk { font-size: 38px; }
+            .font-tilt { font-size: 40px; }
+            .font-snippet { font-size: 34px; }
+
+            @keyframes logo-move {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-25vw); }
+            }
+
+            @keyframes text-reveal {
+                0% { opacity: 0; transform: translateX(10vw); }
+                100% { opacity: 1; transform: translateX(23vw); } 
+            }
+        }
+
+        /* Smallest Screens */
+        @media (max-width: 400px) {
+            .logo { width: 140px; height: 140px; }
+            .font-grotesk { font-size: 28px; }
+            .font-tilt { font-size: 30px; }
+            .font-snippet { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="expanding-circle"></div>
+
+        <img src="LOGO.jpeg" alt="Logo" class="logo">
+
+        <div class="text-wrapper">
+            <span class="font-grotesk">W</span>
+            <span class="font-tilt">I</span>
+            <span class="font-grotesk">LL.</span>
+            <span class="font-snippet">TOLEARN</span>
+        </div>
+    </div>
+<script>
+        // After 4 seconds, redirect to the Render Login page
+        setTimeout(() => {
+            window.location.href = 'https://will-tolearn.onrender.com';
+        }, 4000);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WILL.TOLEARN - Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tilt+Prism&family=Space+Grotesk:wght@400;700&family=Snippet&family=Sofia&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --text-color: #ffffff;
+            --bg-color: #000000;
+            --border-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* --- Top Welcome Section --- */
+        .top-welcome-header {
+            width: 100%;
+            max-width: 1200px;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .logo-i {
+            font-family: 'Tilt Prism', cursive;
+            margin: 0 2px;
+        }
+
+        .to-learn {
+            font-family: 'Snippet', sans-serif;
+            font-size: 3rem;
+            vertical-align: middle;
+        }
+
+        /* --- Main Container --- */
+        .main-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Fun Fact Box */
+        .fun-fact-box {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 3px solid #fff;
+            border-radius: 20px;
+            padding: 15px;
+            width: 240px;
+            font-size: 16px;
+            line-height: 1.4;
+            font-family: 'Sofia', cursive;
+            z-index: 5;
+        }
+
+        .fun-fact-title {
+            font-size: 22px;
+            text-decoration: underline;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Header Section */
+        .header-text {
+            font-size: 28px;
+            font-family: 'Sofia', cursive;
+            margin-bottom: -15px;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 10vw, 120px);
+            margin: 0;
+            letter-spacing: 5px;
+            line-height: 1;
+            font-family: 'Sofia', cursive;
+        }
+
+        /* Form and Profile Row */
+        .content-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .field {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .field label {
+            font-size: 28px;
+            min-width: 180px;
+            text-transform: uppercase;
+            font-family: 'Sofia', cursive;
+        }
+
+        .field input {
+            background: #fff;
+            border: none;
+            border-radius: 50px;
+            height: 55px;
+            width: 100%;
+            padding: 0 25px;
+            font-family: 'Sofia', sans-serif;
+            font-size: 22px;
+            outline: none;
+            color: #000;
+        }
+
+        /* Profile Icon Area */
+        .profile-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-ring {
+            width: 200px;
+            height: 200px;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            font-family: 'Sofia', sans-serif;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .swirl-accent {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 50px;
+            height: 50px;
+            border-top: 6px solid #fff;
+            border-left: 6px solid #fff;
+            border-radius: 60% 0 0 0;
+            transform: rotate(-15deg);
+        }
+
+        /* Footer Section */
+        .footer-wrapper {
+            margin-top: 50px;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        .continue-btn {
+            font-family: 'Tilt Prism', cursive;
+            font-size: 1.75rem;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: 2px solid var(--text-color);
+            padding: 0.75rem 2.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-shadow: 0 0 15px var(--text-color);
+        }
+
+        .continue-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .content-row { flex-direction: column; text-align: center; }
+            .fun-fact-box { position: relative; width: 100%; margin-bottom: 20px; right: 0; }
+            .field { flex-direction: column; gap: 10px; }
+            .footer-wrapper { justify-content: center; }
+            .main-title { font-size: 70px; }
+            .welcome-title { font-size: 1.8rem; }
+            .to-learn { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-welcome-header">
+        <h1 class="welcome-title">WELCOME TO W<span class="logo-i">I</span>LL.<span class="to-learn">TOLEARN</span></h1>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="fun-fact-box">
+            <span class="fun-fact-title">FUN FACT:</span>
+            WHEN YOU ENTER THE USERNAME THE PROFILE ALSO CHANGES
+        </div>
+
+        <div class="header-text">COMPLETE YOUR</div>
+        <h1 class="main-title">"PROFILE"</h1>
+
+        <div class="content-row">
+            <div class="input-group">
+                <div class="field">
+                    <label>USERNAME</label>
+                    <input type="text" id="usernameInput" spellcheck="false" placeholder="Type here...">
+                </div>
+                <div class="field">
+                    <label>PASSWORD</label>
+                    <input type="password" id="passwordInput" placeholder="••••••••">
+                </div>
+            </div>
+
+            <div class="profile-container">
+                <div class="swirl-accent"></div>
+                <div class="profile-ring" id="profileDisplay">@</div>
+            </div>
+        </div>
+
+        <div class="footer-wrapper">
+            <button class="continue-btn" id="continueButton">CONTINUE</button>
+        </div>
+    </div>
+
+    <script>
+        const usernameInput = document.getElementById('usernameInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const profileDisplay = document.getElementById('profileDisplay');
+        const continueBtn = document.getElementById('continueButton');
+
+        // Replace this with your actual Render URL after deployment
+        const API_URL = 'http://localhost:10000'; 
+
+        // Live profile character update
+        usernameInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (value.length > 0) {
+                profileDisplay.innerText = value.charAt(0);
+            } else {
+                profileDisplay.innerText = '@';
+            }
+        });
+
+        // Handle database storage and redirection
+        continueBtn.addEventListener('click', async () => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!username || !password) {
+                alert("Please fill in both Username and Password.");
+                return;
+            }
+
+            // Change button state to show it's working
+            continueBtn.innerText = "SAVING...";
+            continueBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Redirect to home.html only after successful save
+                    window.location.href = 'home.html';
+                } else {
+                    alert(data.error || "Signup failed. Try a different username.");
+                    continueBtn.innerText = "CONTINUE";
+                    continueBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Could not connect to the database. Make sure your Render server is running.");
+                continueBtn.innerText = "CONTINUE";
+                continueBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
